@@ -1,0 +1,13 @@
+# Ignorer les fichiers compilés
+/target/
+
+# Ignorer les fichiers IDE
+.idea/
+*.iml
+
+# Ignorer les logs
+*.log
+
+# Ignorer les fichiers système
+.DS_Store
+Thumbs.db
