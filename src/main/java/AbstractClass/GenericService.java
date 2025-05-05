@@ -12,6 +12,10 @@ public abstract class GenericService<T, ID> {
         this.dao = dao;
     }
 
+    protected GenericDAO<T, ID> getDAO() {
+        return dao;
+    }
+
     public T save(T entity) {
         return dao.save(entity);
     }

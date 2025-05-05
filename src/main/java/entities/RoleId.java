@@ -6,21 +6,21 @@ import jakarta.persistence.Embeddable;
 
 @Embeddable
 public class RoleId implements Serializable {
-    private Long film;
-    private Long acteur;
+    private String film;
+    private String acteur;
 
     public RoleId() {}
 
-    public RoleId(Long film, Long acteur) {
+    public RoleId(String film, String acteur) {
         this.film = film;
         this.acteur = acteur;
     }
 
-    public Long getFilmId() { return film; }
-    public void setFilmId(Long film) { this.film = film; }
+    public String getFilmId() { return film; }
+    public void setFilmId(String film) { this.film = film; }
 
-    public Long getActeurId() { return acteur; }
-    public void setActeurId(Long acteur) { this.acteur = acteur; }
+    public String getActeurId() { return acteur; }
+    public void setActeurId(String acteur) { this.acteur = acteur; }
 
     @Override
     public boolean equals(Object o) {
