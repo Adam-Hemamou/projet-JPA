@@ -62,12 +62,17 @@ public class Film {
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
 
-    public String getTitre() { return nom; }
-    public void setTitre(String nom) { this.nom = nom; }
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
 
     public Integer getAnneeSortie() { return annee; }
     public void setAnneeSortie(Integer annee) { this.annee = annee; }
-
 
     public double getRating() {
         return rating;
@@ -91,6 +96,54 @@ public class Film {
 
     public void setResume(String resume) {
         this.resume = resume;
+    }
+
+    public LieuTournage getLieuTournage() {
+        return lieuTournage;
+    }
+
+    public void setLieuTournage(LieuTournage lieuTournage) {
+        this.lieuTournage = lieuTournage;
+    }
+
+    public List<Realisateur> getRealisateurs() {
+        return realisateurs;
+    }
+
+    public void setRealisateurs(List<Realisateur> realisateurs) {
+        this.realisateurs = realisateurs;
+    }
+
+    public List<Acteur> getActeurs() {
+        return acteurs;
+    }
+
+    public void setActeurs(List<Acteur> acteurs) {
+        this.acteurs = acteurs;
+    }
+
+    public List<Genre> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(List<Genre> genres) {
+        this.genres = genres;
+    }
+
+    public Langue getLangue() {
+        return langue;
+    }
+
+    public void setLangue(Langue langue) {
+        this.langue = langue;
+    }
+
+    public Pays getPays() {
+        return pays;
+    }
+
+    public void setPays(Pays pays) {
+        this.pays = pays;
     }
 
     @Override

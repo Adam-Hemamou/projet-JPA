@@ -38,6 +38,14 @@ public class Realisateur {
     public String getUrl() { return url; }
     public void setUrl(String url) { this.url = url; }
 
+    public LieuNaissance getLieuNaissance() {
+        return lieuNaissance;
+    }
+
+    public void setLieuNaissance(LieuNaissance lieuNaissance) {
+        this.lieuNaissance = lieuNaissance;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Realisateur{");
