@@ -1,19 +1,25 @@
 package utils.parser;
 
 import entities.Pays;
+import services.PaysService;
 
 public class PaysParser {
 
-    public static Pays parse(String nom) {
-        Pays pays = new Pays();
-        pays.setNom(nom.trim());
-        return pays;
+    private static PaysService paysService;
+
+    public PaysParser(PaysService paysService) {
+        PaysParser.paysService = paysService;
     }
 
-    public static Pays parseFromCSV(String[] record) {
-        Pays pays = new Pays();
-        pays.setNom(record[0].trim());
-        pays.setUrl(record[1].trim());
-        return pays;
+    public static void setPaysService(PaysService paysService) {
+        PaysParser.paysService = paysService;
+    }
+
+    public static Pays parse(String nom) {
+        return paysService.findByNom(nom).orElseGet(() -> {
+            Pays pays = new Pays();
+            pays.setNom(nom.trim());
+            return pays;
+        });
     }
 }

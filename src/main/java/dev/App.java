@@ -1,33 +1,53 @@
 package dev;
 
-import entities.Film;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
+import DAO.*;
+import services.*;
+import utils.dataReader.FilmDataImporter;
+import utils.dataReader.ActeurDataImporter;
+import utils.dataReader.RealisateurDataImporter;
+import utils.dataReader.PaysDataImporter;
+import utils.dataReader.RoleDataImporter;
+import utils.dataReader.FilmRealisateurDataImporter;
+import utils.dataReader.CastingPrincipalDataImporter;
+import utils.parser.FilmParser;
 
-/**
- * Hello world!
- */
 public class App {
+
     public static void main(String[] args) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("imdb-pu");
-        EntityManager em = emf.createEntityManager();
+        // Initialize services and DAOs
+        FilmDAO filmDAO = new FilmDAO();
+        ActeurDAO acteurDAO = new ActeurDAO();
+        RealisateurDAO realisateurDAO = new RealisateurDAO();
+        PaysDAO paysDAO = new PaysDAO();
+        RoleDAO roleDAO = new RoleDAO();
+        GenreDAO genreDAO = new GenreDAO();
+        LangueDAO langueDAO = new LangueDAO();
 
-        em.getTransaction().begin();
+        FilmService filmService = new FilmService(filmDAO);
+        ActeurService acteurService = new ActeurService(acteurDAO);
+        RealisateurService realisateurService = new RealisateurService(realisateurDAO);
+        PaysService paysService = new PaysService(paysDAO);
+        RoleService roleService = new RoleService(roleDAO);
+        GenreService genreService = new GenreService(genreDAO);
+        LangueService langueService = new LangueService(langueDAO);
 
-        // Exemple : créer un film
-        Film film = new Film();
-        film.setId(1L);
-        film.setTitre("Inception");
-        film.setAnneeSortie(2010);
-        film.setRating(8.8);
-        film.setUrl("https://...");
-        film.setResume("Un voleur d'idées...");
+        // Initialize data importers
+        FilmParser filmParser = new FilmParser(paysService,  genreService, langueService);
+        FilmDataImporter filmDataImporter = new FilmDataImporter(filmService, filmParser);
+        ActeurDataImporter acteurDataImporter = new ActeurDataImporter(acteurService);
+        RealisateurDataImporter realisateurDataImporter = new RealisateurDataImporter(realisateurService);
+        PaysDataImporter paysDataImporter = new PaysDataImporter(paysService);
+        RoleDataImporter roleDataImporter = new RoleDataImporter(roleService);
+        FilmRealisateurDataImporter filmRealisateurDataImporter = new FilmRealisateurDataImporter(filmService, realisateurService);
+        CastingPrincipalDataImporter castingPrincipalDataImporter = new CastingPrincipalDataImporter(filmService, acteurService);
 
-        em.persist(film);
-
-        em.getTransaction().commit();
-        em.close();
-        emf.close();
+        // Import data from CSV files
+        filmDataImporter.importFilmsFromCSV("path/to/films.csv");
+        acteurDataImporter.importActeursFromCSV("path/to/acteurs.csv");
+        realisateurDataImporter.importRealisateursFromCSV("path/to/realisateurs.csv");
+        paysDataImporter.importPaysFromCSV("path/to/pays.csv");
+        roleDataImporter.importRolesFromCSV("path/to/roles.csv");
+        filmRealisateurDataImporter.importFilmRealisateurFromCSV("path/to/film_realisateur.csv");
+        castingPrincipalDataImporter.importCastingPrincipalFromCSV("path/to/casting_principal.csv");
     }
 }
