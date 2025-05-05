@@ -7,7 +7,7 @@ import java.util.List;
 @Entity
 public class Film {
     @Id
-    private Long id;
+    private String id;
 
     private String nom;
 
@@ -59,8 +59,8 @@ public class Film {
 
     public Film() {}
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
 
     public String getTitre() { return nom; }
     public void setTitre(String nom) { this.nom = nom; }
