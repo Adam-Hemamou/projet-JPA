@@ -39,6 +39,9 @@ public class LieuTournage {
     public Adresse getAdresse() { return adresse; }
     public void setAdresse(Adresse adresse) { this.adresse = adresse; }
 
+    public Pays getPays() { return pays; }
+    public void setPays(Pays pays) { this.pays = pays; }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("LieuTournage{");

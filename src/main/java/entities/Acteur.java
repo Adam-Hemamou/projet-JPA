@@ -53,6 +53,14 @@ public class Acteur {
         this.url = url;
     }
 
+    public LieuNaissance getLieuNaissance() {
+        return lieuNaissance;
+    }
+
+    public void setLieuNaissance(LieuNaissance lieuNaissance) {
+        this.lieuNaissance = lieuNaissance;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Acteur{");

@@ -45,6 +45,14 @@ public class LieuNaissance {
     public String getRegion() { return region; }
     public void setRegion(String region) { this.region = region; }
 
+    public Pays getPays() {
+        return pays;
+    }
+
+    public void setPays(Pays pays) {
+        this.pays = pays;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("LieuNaissance{");
