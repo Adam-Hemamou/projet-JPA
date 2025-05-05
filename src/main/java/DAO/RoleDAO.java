@@ -1,5 +1,6 @@
 package DAO;
 
+import AbstractClass.GenericDAO;
 import entities.Role;
 import entities.RoleId;
 

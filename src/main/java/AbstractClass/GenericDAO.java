@@ -1,4 +1,4 @@
-package DAO;
+package AbstractClass;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
