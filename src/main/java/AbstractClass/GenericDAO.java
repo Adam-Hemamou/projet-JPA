@@ -1,18 +1,17 @@
 package AbstractClass;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 public abstract class GenericDAO<T, ID> {
 
-    @PersistenceContext
     protected EntityManager entityManager;
     private final Class<T> type;
 
     @SuppressWarnings("unchecked")
-    public GenericDAO() {
+    public GenericDAO(EntityManager entityManager) {
+        this.entityManager = entityManager;
         this.type = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
 

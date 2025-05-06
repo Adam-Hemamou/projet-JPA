@@ -2,6 +2,7 @@ package entities;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -19,6 +20,7 @@ public class Film {
     private String url;
 
     @Lob
+    @Column(length = 2000)
     private String resume;
 
     @ManyToMany
@@ -27,7 +29,7 @@ public class Film {
             joinColumns = @JoinColumn(name = "film_id"),
             inverseJoinColumns = @JoinColumn(name = "realisateur_id")
     )
-    private List<Realisateur> realisateurs;
+    private List<Realisateur> realisateurs = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(
@@ -35,7 +37,7 @@ public class Film {
             joinColumns = @JoinColumn(name = "film_id"),
             inverseJoinColumns = @JoinColumn(name = "acteur_id")
     )
-    private List<Acteur> acteurs;
+    private List<Acteur> acteurs = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(

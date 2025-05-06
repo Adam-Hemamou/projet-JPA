@@ -20,8 +20,9 @@ public class RoleDataImporter {
     public void importRolesFromCSV(String filePath) {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
+            reader.readLine();
             while ((line = reader.readLine()) != null) {
-                String[] record = line.split(",");
+                String[] record = line.split(";");
                 Role role = RoleParser.parse(record);
 
                 RoleId roleId = new RoleId(role.getFilm().getId(), role.getActeur().getId());

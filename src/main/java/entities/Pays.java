@@ -12,6 +12,7 @@ public class Pays {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(length = 500)
     private String nom;
 
     @Lob

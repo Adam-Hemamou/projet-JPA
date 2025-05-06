@@ -22,8 +22,9 @@ public class FilmDataImporter {
     public void importFilmsFromCSV(String filePath) {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
+            reader.readLine();
             while ((line = reader.readLine()) != null) {
-                String[] record = line.split(",");
+                String[] record = line.split(";");
                 Film film = filmParser.parse(record);
                 if (filmService.findById(film.getId()).isEmpty()) {
                     filmService.save(film);
