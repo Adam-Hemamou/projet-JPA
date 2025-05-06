@@ -19,10 +19,11 @@ public class PaysDataImporter {
     public void importPaysFromCSV(String filePath) {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
+            reader.readLine();
             while ((line = reader.readLine()) != null) {
-                String[] record = line.split(",");
+                String[] record = line.split(";");
                 Pays pays = PaysParser.parseFromCSV(record);
-                if (paysService.findById(pays.getId()).isEmpty()) {
+                if (paysService.findByNom(pays.getNom()).isEmpty()) {
                     paysService.save(pays);
                 }
             }
