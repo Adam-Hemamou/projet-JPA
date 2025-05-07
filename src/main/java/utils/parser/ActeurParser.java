@@ -9,11 +9,20 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
+/**
+ * Classe utilitaire pour analyser les données des acteurs à partir d'un tableau de chaînes.
+ */
 public class ActeurParser {
 
     private final ActeurService acteurService;
     private final LieuNaissanceService lieuNaissanceService;
 
+    /**
+     * Constructeur pour initialiser les services nécessaires.
+     *
+     * @param acteurService le service pour gérer les opérations CRUD des acteurs
+     * @param lieuNaissanceService le service pour gérer les lieux de naissance
+     */
     public ActeurParser(ActeurService acteurService, LieuNaissanceService lieuNaissanceService) {
         this.acteurService = acteurService;
         this.lieuNaissanceService = lieuNaissanceService;
@@ -21,6 +30,12 @@ public class ActeurParser {
 
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("MMMM d yyyy", Locale.ENGLISH);
 
+    /**
+     * Analyse un tableau de chaînes pour créer une instance d'Acteur.
+     *
+     * @param record le tableau de chaînes contenant les données de l'acteur
+     * @return une instance d'Acteur créée à partir des données analysées
+     */
     public Acteur parse(String[] record) {
         Acteur acteur = new Acteur();
         acteur.setId(getSafeValue(record, 0));
@@ -31,10 +46,10 @@ public class ActeurParser {
             try {
                 acteur.setDateNaissance(LocalDate.parse(dateNaissanceStr.trim(), DATE_FORMATTER));
             } catch (Exception e) {
-                acteur.setDateNaissance(null);  // Si la date est mal formatée, on l'assigne à null
+                acteur.setDateNaissance(null);
             }
         } else {
-            acteur.setDateNaissance(null);  // Si la date est vide, on l'assigne à null
+            acteur.setDateNaissance(null);
         }
 
         LieuNaissance lieuNaissance = new LieuNaissanceParser(lieuNaissanceService).parse(getSafeValue(record, 3));
@@ -44,10 +59,10 @@ public class ActeurParser {
             try {
                 acteur.setTaille(extractNumericValue(taille));
             } catch (NumberFormatException e) {
-                acteur.setTaille(0.0);  // Valeur par défaut si la taille est mal formatée
+                acteur.setTaille(0.0);
             }
         } else {
-            acteur.setTaille(0.0);  // Valeur par défaut si la taille est manquante
+            acteur.setTaille(0.0);
         }
         acteur.setUrl(getSafeValue(record, 5));
         return acteur;
@@ -58,9 +73,8 @@ public class ActeurParser {
     }
 
     private static double extractNumericValue(String value) {
-        // Retirer tout ce qui n'est pas un chiffre ou un point (comme " m")
         String numericValue = value.replaceAll("[^0-9.]", "");
-        return Double.parseDouble(numericValue); // Convertir en double
+        return Double.parseDouble(numericValue);
     }
 
 }

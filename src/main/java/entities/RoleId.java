@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.Objects;
 import jakarta.persistence.Embeddable;
 
+/**
+ * Représente l'identifiant composite pour la classe Role.
+ */
 @Embeddable
 public class RoleId implements Serializable {
     private String film;
@@ -11,17 +14,23 @@ public class RoleId implements Serializable {
 
     public RoleId() {}
 
+    /**
+     * Constructeur pour la classe RoleId avec les IDs spécifiés.
+     *
+     * @param film l'ID du film
+     * @param acteur l'ID de l'acteur
+     */
     public RoleId(String film, String acteur) {
         this.film = film;
         this.acteur = acteur;
     }
 
-    public String getFilmId() { return film; }
-    public void setFilmId(String film) { this.film = film; }
-
-    public String getActeurId() { return acteur; }
-    public void setActeurId(String acteur) { this.acteur = acteur; }
-
+    /**
+     * Vérifie l'égalité entre deux objets RoleId.
+     *
+     * @param o l'objet à comparer
+     * @return true si les objets sont égaux, false sinon
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -31,8 +40,4 @@ public class RoleId implements Serializable {
                 Objects.equals(acteur, that.acteur);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(film, acteur);
-    }
 }

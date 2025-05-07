@@ -10,6 +10,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Classe utilitaire pour analyser les données des films à partir d'un tableau de chaînes.
+ */
 public class FilmParser {
 
     private final PaysService paysService;
@@ -17,6 +20,14 @@ public class FilmParser {
     private final LangueService langueService;
     private final LieuTournageParser lieuTournageParser;
 
+    /**
+     * Constructeur pour initialiser les services nécessaires.
+     *
+     * @param paysService le service pour gérer les opérations CRUD des pays
+     * @param genreService le service pour gérer les opérations CRUD des genres
+     * @param langueService le service pour gérer les opérations CRUD des langues
+     * @param lieuTournageService le service pour gérer les lieux de tournage
+     */
     public FilmParser(PaysService paysService, GenreService genreService, LangueService langueService, LieuTournageService lieuTournageService) {
         this.paysService = paysService;
         this.genreService = genreService;
@@ -24,6 +35,12 @@ public class FilmParser {
         this.lieuTournageParser = new LieuTournageParser(lieuTournageService);
     }
 
+    /**
+     * Analyse un tableau de chaînes pour créer une instance de Film.
+     *
+     * @param record le tableau de chaînes contenant les données du film
+     * @return une instance de Film créée à partir des données analysées
+     */
     public Film parse(String[] record) {
         System.out.println("Ligne analysée : " + Arrays.toString(record));
         Film film = new Film();
@@ -50,7 +67,7 @@ public class FilmParser {
             });
             film.setLangue(langue);
         } else {
-            film.setLangue(null); // ou une langue par défaut
+            film.setLangue(null);
         }
 
         String paysNom = getSafeValue(record, 9);
