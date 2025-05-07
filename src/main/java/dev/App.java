@@ -1,6 +1,8 @@
 package dev;
 
 import DAO.*;
+import dev.factoryPattern.ServiceFactory;
+import dev.factoryPattern.ServiceFactoryImpl;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
@@ -24,32 +26,21 @@ public class App {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("imdb-pu");
         EntityManager em = emf.createEntityManager();
         EntityTransaction transaction = em.getTransaction();
-        // Initialize services and DAOs
-        FilmDAO filmDAO = new FilmDAO(em);
-        ActeurDAO acteurDAO = new ActeurDAO(em);
-        RealisateurDAO realisateurDAO = new RealisateurDAO(em);
-        PaysDAO paysDAO = new PaysDAO(em);
-        RoleDAO roleDAO = new RoleDAO(em);
-        GenreDAO genreDAO = new GenreDAO(em);
-        LangueDAO langueDAO = new LangueDAO(em);
-        LieuTournageDAO lieuTournageDAO = new LieuTournageDAO(em);
-        AdresseDAO addressDAO = new AdresseDAO(em);
-        LieuNaissanceDAO lieuNaissanceDAO = new LieuNaissanceDAO(em);
 
+        // Utiliser la factory pour créer les services
+        ServiceFactory serviceFactory = new ServiceFactoryImpl(em);
 
+        FilmService filmService = serviceFactory.createFilmService();
+        ActeurService acteurService = serviceFactory.createActeurService();
+        RealisateurService realisateurService = serviceFactory.createRealisateurService();
+        PaysService paysService = serviceFactory.createPaysService();
+        RoleService roleService = serviceFactory.createRoleService();
+        GenreService genreService = serviceFactory.createGenreService();
+        LangueService langueService = serviceFactory.createLangueService();
+        LieuTournageService lieuTournageService = serviceFactory.createLieuTournageService();
+        LieuNaissanceService lieuNaissanceService = serviceFactory.createLieuNaissanceService();
 
-        FilmService filmService = new FilmService(filmDAO);
-        ActeurService acteurService = new ActeurService(acteurDAO);
-        RealisateurService realisateurService = new RealisateurService(realisateurDAO);
-        PaysService paysService = new PaysService(paysDAO);
-        RoleService roleService = new RoleService(roleDAO);
-        GenreService genreService = new GenreService(genreDAO);
-        LangueService langueService = new LangueService(langueDAO);
-        AdresseService adresseService = new AdresseService(addressDAO);
-        LieuTournageService lieuTournageService = new LieuTournageService(lieuTournageDAO, adresseService);
-        LieuNaissanceService lieuNaissanceService = new LieuNaissanceService(lieuNaissanceDAO);
-
-        // Initialize data importers
+        // Initialiser les data importers
         FilmParser filmParser = new FilmParser(paysService, genreService, langueService, lieuTournageService);
         FilmDataImporter filmDataImporter = new FilmDataImporter(filmService, filmParser);
         ActeurDataImporter acteurDataImporter = new ActeurDataImporter(acteurService, lieuNaissanceService);
@@ -59,7 +50,7 @@ public class App {
         FilmRealisateurDataImporter filmRealisateurDataImporter = new FilmRealisateurDataImporter(filmService, realisateurService);
         CastingPrincipalDataImporter castingPrincipalDataImporter = new CastingPrincipalDataImporter(filmService, acteurService);
 
-        // Import data from CSV files
+        // Importer les données à partir des fichiers CSV en utilsant les data importers
         PaysParser.setPaysService(paysService);
         try {
             transaction.begin();
@@ -80,6 +71,13 @@ public class App {
         }
     }
 
+    /**
+     * Obtient le chemin du fichier à partir des ressources.
+     *
+     * @param resourceName le nom de la ressource
+     * @return le chemin du fichier
+     * @throws IllegalArgumentException si le fichier est introuvable
+     */
     private static String getFilePath(String resourceName) {
         URL resource = ClassLoader.getSystemClassLoader().getResource(resourceName);
         if (resource == null) {

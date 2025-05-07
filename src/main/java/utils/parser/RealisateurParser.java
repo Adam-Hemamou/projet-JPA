@@ -2,25 +2,36 @@ package utils.parser;
 
 import entities.LieuNaissance;
 import entities.Realisateur;
-import services.ActeurService;
 import services.LieuNaissanceService;
-import services.RealisateurService;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Locale;
 
+/**
+ * Classe utilitaire pour analyser les données des réalisateurs à partir d'un tableau de chaînes.
+ */
 public class RealisateurParser {
 
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("MMMM d yyyy", Locale.ENGLISH);
     private final LieuNaissanceService lieuNaissanceService;
 
+    /**
+     * Constructeur pour initialiser le service nécessaire.
+     *
+     * @param lieuNaissanceService le service pour gérer les lieux de naissance
+     */
     public RealisateurParser( LieuNaissanceService lieuNaissanceService) {
         this.lieuNaissanceService = lieuNaissanceService;
     }
 
-
+    /**
+     * Analyse un tableau de chaînes pour créer une instance de Realisateur.
+     *
+     * @param record le tableau de chaînes contenant les données du réalisateur
+     * @return une instance de Realisateur créée à partir des données analysées
+     */
     public Realisateur parse(String[] record) {
         Realisateur realisateur = new Realisateur();
         String id = getSafeValue(record, 0);
@@ -75,7 +86,7 @@ public class RealisateurParser {
                 } catch (DateTimeParseException ignored) {}
             }
         } catch (Exception e) {
-            // ignore
+            e.printStackTrace();
         }
 
         throw new DateTimeParseException("Format de date non reconnu", dateStr, 0);
