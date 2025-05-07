@@ -98,7 +98,7 @@ jpa-project/
 └── README.md                           # Documentation du projet
 ```
 
-## 🛠 Technologies utilisées
+## Technologies utilisées
 
 - Java 17
 - Maven
